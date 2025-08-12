@@ -1,3 +1,4 @@
+```
 import dotenv from "dotenv";
 import pkg from "pg";
 
@@ -21,3 +22,4 @@ console.log("TYPE:", typeof process.env.DB_PASSWORD);
 pool.connect()
   .then(() => console.log("Connected to PostgreSQL"))
   .catch((err) => console.error("Connection error", err.stack));
+```
