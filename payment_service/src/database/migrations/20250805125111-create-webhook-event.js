@@ -1,65 +1,65 @@
 // migrations/20250805125111-create-webhook-event.js
 'use strict';
 export async function up(queryInterface, Sequelize) {
-  await queryInterface.createTable('webhook_events', {
-    event_id: {
+  await queryInterface.createTable('webhookEvent', {
+    webhookEventId: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
       primaryKey: true,
     },
-    webhook_id: {
+    webhookId: {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
-        model: 'webhooks',
-        key: 'webhook_id',
+        model: 'webhook',
+        key: 'webhookId',
       },
     },
-    payment_id: {
+    paymentId: {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
-        model: 'payments',
-        key: 'payment_id',
+        model: 'payment',
+        key: 'paymentId',
       },
     },
-    event_type: {
+    eventType: {
       type: Sequelize.STRING(100),
       allowNull: false,
     },
-    status_id: {
+    webhookEventStatusId: {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
-        model: 'webhook_event_statuses',
-        key: 'status_id',
+        model: 'webhookEventStatus',
+        key: 'webhookEventStatusId',
       },
     },
     payload: {
       type: Sequelize.JSONB,
     },
-    response_code: {
+    responseCode: {
       type: Sequelize.STRING(10),
     },
-    response_body: {
+    responseBody: {
       type: Sequelize.TEXT,
     },
-    created_at: {
+    createdAt: {
       allowNull: false,
       type: Sequelize.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    delivered_at: {
+    deliveredAt: {
       type: Sequelize.DATE,
     },
-    retry_count: {
+    retryCount: {
       type: Sequelize.INTEGER,
       defaultValue: 0,
     },
   });
-  await queryInterface.addIndex('webhook_events', ['webhook_id']);
-  await queryInterface.addIndex('webhook_events', ['payment_id']);
+  await queryInterface.addIndex('webhookEvent', ['webhookId']);
+  await queryInterface.addIndex('webhookEvent', ['paymentId']);
 }
 export async function down(queryInterface, Sequelize) {
-  await queryInterface.dropTable('webhook_events');
+  await queryInterface.dropTable('webhookEvent');
 }

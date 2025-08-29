@@ -1,0 +1,19 @@
+Types of errors
+
+Operation errors
+
+Operational errors are the problems that we can predict that will happen at some point in the future. We need to handle them in advance.
+- User trying to access invalid route.
+- inputting invalid data.
+- Application failed to connect to the server.
+- Request timeout. 
+
+Programing Errors
+
+Programming errors are simply bugs that we programmers, by mistake, introduce them into out code.
+
+- Trying to read property of an undefined variable.
+- using await without async.
+- Accidentally using req.query instead of req.body.
+- Passing a number where an object is expected.
+

@@ -1,18 +1,18 @@
 // migrations/20250805125109-create-refund.js
 'use strict';
 export async function up(queryInterface, Sequelize) {
-  await queryInterface.createTable('refunds', {
-    refund_id: {
+  await queryInterface.createTable('refund', {
+    refundId: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
       primaryKey: true,
     },
-    payment_id: {
+    paymentId: {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
-        model: 'payments',
-        key: 'payment_id',
+        model: 'payment',
+        key: 'paymentId',
       },
     },
     amount: {
@@ -23,12 +23,12 @@ export async function up(queryInterface, Sequelize) {
       type: Sequelize.STRING(3),
       allowNull: false,
     },
-    status_id: {
+    refundStatusId: {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
-        model: 'refund_statuses',
-        key: 'status_id',
+        model: 'refundStatus',
+        key: 'refundStatusId',
       },
     },
     reason: {
@@ -37,20 +37,25 @@ export async function up(queryInterface, Sequelize) {
     description: {
       type: Sequelize.TEXT,
     },
-    created_at: {
+    createdAt: {
       allowNull: false,
       type: Sequelize.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    processed_at: {
+    updatedAt: {
+      allowNull: false,
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    },
+    processedAt: {
       type: Sequelize.DATE,
     },
     metadata: {
       type: Sequelize.JSONB,
     },
   });
-  await queryInterface.addIndex('refunds', ['payment_id']);
+  await queryInterface.addIndex('refund', ['paymentId']);
 }
 export async function down(queryInterface, Sequelize) {
-  await queryInterface.dropTable('refunds');
+  await queryInterface.dropTable('refund');
 }

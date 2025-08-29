@@ -1,27 +1,34 @@
 // migrations/20250805125108-create-payment-transaction.js
 'use strict';
 export async function up(queryInterface, Sequelize) {
-  await queryInterface.createTable('payment_transactions', {
-    transaction_id: {
+  await queryInterface.createTable('transaction', {
+    transactionId: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
       primaryKey: true,
     },
-    payment_id: {
+    paymentId: {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
-        model: 'payments',
-        key: 'payment_id',
+        model: 'payment',
+        key: 'paymentId',
       },
     },
-    transaction_type_id: {
+    transactionTypeId: {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
-        model: 'transaction_types',
-        key: 'transaction_type_id',
+        model: 'transactionType',
+        key: 'transactionTypeId',
       },
+    },
+    merchantId:{
+      type: Sequelize.UUID,
+      allowNull: false,
+    },
+    description: {
+      type: Sequelize.TEXT,
     },
     amount: {
       type: Sequelize.DECIMAL(15, 2),
@@ -31,34 +38,26 @@ export async function up(queryInterface, Sequelize) {
       type: Sequelize.STRING(3),
       allowNull: false,
     },
-    status_id: {
-      type: Sequelize.UUID,
-      allowNull: false,
-      references: {
-        model: 'payment_statuses',
-        key: 'status_id',
-      },
-    },
-    gateway_transaction_id: {
+    gatewayTransactionId: {
       type: Sequelize.STRING(100),
     },
-    gateway_response: {
+    gatewayResponse: {
       type: Sequelize.TEXT,
     },
-    created_at: {
+    createdAt: {
       allowNull: false,
       type: Sequelize.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    processed_at: {
+    processedAt: {
       type: Sequelize.DATE,
     },
-    gateway_metadata: {
+    gatewayMetadata: {
       type: Sequelize.JSONB,
     },
   });
-  await queryInterface.addIndex('payment_transactions', ['payment_id']);
+  await queryInterface.addIndex('transaction', ['paymentId']);
 }
 export async function down(queryInterface, Sequelize) {
-  await queryInterface.dropTable('payment_transactions');
+  await queryInterface.dropTable('transaction');
 }

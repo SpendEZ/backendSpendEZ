@@ -13,13 +13,13 @@ export async function createConnectedStripeAccount(emailAddress){
         email: emailAddress,
         controller: {
             fees: {
-            payer: 'application',
+              payer: 'application',
             },
             losses: {
-            payments: 'application',
+              payments: 'application',
             },
             stripe_dashboard: {
-            type: 'express',
+              type: 'express',
             },
         },
         capabilities:{
@@ -27,9 +27,18 @@ export async function createConnectedStripeAccount(emailAddress){
             transfers: {requested: true},
         }
     });
+    const accountLink = await stripe.accountLinks.create({
+        account: account.id,
+        refresh_url: 'http://localhost:3000/api/v1/stripe/merchant',
+        return_url: 'http://localhost:3000/api/v1/stripe/merchant',
+        type: 'account_onboarding',
+   });
 
     console.log("stripe account created");
     console.log(account);    
+
+    console.log("stripe account link created");
+    console.log(accountLink);
 }
 
 export const updateConnectedStripeAccount = async (accountId) => {

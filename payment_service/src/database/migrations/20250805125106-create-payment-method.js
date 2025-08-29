@@ -1,47 +1,47 @@
 // migrations/20250805125106-create-payment-method.js
 'use strict';
 export async function up(queryInterface, Sequelize) {
-  await queryInterface.createTable('payment_methods', {
-    payment_method_id: {
+  await queryInterface.createTable('paymentMethod', {
+    paymentMethodId: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
       primaryKey: true,
     },
-    customer_id: {
+    customerId: {
       type: Sequelize.UUID,
       allowNull: false,
     },
-    payment_type_id: {
+    paymentTypeId: {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
-        model: 'payment_types',
-        key: 'payment_type_id',
+        model: 'paymentType',
+        key: 'paymentTypeId',
       },
     },
-    is_default: {
+    isDefault: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
-    is_active: {
+    isActive: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: true,
     },
-    created_at: {
+    createdAt: {
       allowNull: false,
       type: Sequelize.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    updated_at: {
+    updatedAt: {
       allowNull: false,
       type: Sequelize.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
   });
-  await queryInterface.addIndex('payment_methods', ['customer_id']);
+  await queryInterface.addIndex('paymentMethod', ['customerId']);
 }
 export async function down(queryInterface, Sequelize) {
-  await queryInterface.dropTable('payment_methods');
+  await queryInterface.dropTable('paymentMethod');
 }

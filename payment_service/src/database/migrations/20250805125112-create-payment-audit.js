@@ -1,53 +1,53 @@
 // migrations/20250805125112-create-payment-audit.js
 'use strict';
 export async function up(queryInterface, Sequelize) {
-  await queryInterface.createTable('payment_audits', {
-    audit_id: {
+  await queryInterface.createTable('audit', {
+    auditId: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
       primaryKey: true,
     },
-    payment_id: {
+    paymentId: {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
-        model: 'payments',
-        key: 'payment_id',
+        model: 'payment',
+        key: 'paymentId',
       },
     },
     action: {
       type: Sequelize.STRING(100),
       allowNull: false,
     },
-    old_status_id: {
+    oldStatusId: {
       type: Sequelize.UUID,
       references: {
-        model: 'audit_statuses',
-        key: 'status_id',
+        model: 'auditStatus',
+        key: 'auditStatusId',
       },
     },
-    new_status_id: {
+    newStatusId: {
       type: Sequelize.UUID,
       references: {
-        model: 'audit_statuses',
-        key: 'status_id',
+        model: 'auditStatus',
+        key: 'auditStatusId',
       },
     },
-    changed_by: {
+    changedBy: {
       type: Sequelize.STRING(100),
       allowNull: false,
     },
     changes: {
       type: Sequelize.JSONB,
     },
-    created_at: {
+    createdAt: {
       allowNull: false,
       type: Sequelize.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
   });
-  await queryInterface.addIndex('payment_audits', ['payment_id']);
+  await queryInterface.addIndex('audit', ['paymentId']);
 }
 export async function down(queryInterface, Sequelize) {
-  await queryInterface.dropTable('payment_audits');
+  await queryInterface.dropTable('audit');
 }
