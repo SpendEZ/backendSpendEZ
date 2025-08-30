@@ -4,58 +4,58 @@ import { Model, DataTypes } from 'sequelize';
 export default (sequelize) => {
   class WebhookEvent extends Model {
     static associate(models) {
-      WebhookEvent.belongsTo(models.Webhook, { foreignKey: 'webhook_id' });
-      WebhookEvent.belongsTo(models.Payment, { foreignKey: 'payment_id' });
-      WebhookEvent.belongsTo(models.WebhookEventStatus, { foreignKey: 'status_id' });
+      WebhookEvent.belongsTo(models.Webhook, { foreignKey: 'webhookId' });
+      WebhookEvent.belongsTo(models.Payment, { foreignKey: 'paymentId' });
+      WebhookEvent.belongsTo(models.WebhookEventStatus, { foreignKey: 'webhookEventStatusId' });
     }
   }
   WebhookEvent.init({
-    event_id: {
+    webhookEventId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    webhook_id: {
+    webhookId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
-    payment_id: {
+    paymentId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
-    event_type: {
+    eventType: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-    status_id: {
+    webhookEventStatusId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
     payload: {
       type: DataTypes.JSONB,
     },
-    response_code: {
+    responseCode: {
       type: DataTypes.STRING(10),
     },
-    response_body: {
+    responseBody: {
       type: DataTypes.TEXT,
     },
-    created_at: {
+    createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
-    delivered_at: {
+    deliveredAt: {
       type: DataTypes.DATE,
     },
-    retry_count: {
+    retryCount: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
   }, {
     sequelize,
     modelName: 'WebhookEvent',
-    tableName: 'webhook_events',
+    tableName: 'webhookEvent',
     underscored: true,
   });
   return WebhookEvent;

@@ -4,17 +4,17 @@ import { Model, DataTypes } from 'sequelize';
 export default (sequelize) => {
   class Refund extends Model {
     static associate(models) {
-      Refund.belongsTo(models.Payment, { foreignKey: 'payment_id' });
-      Refund.belongsTo(models.RefundStatus, { foreignKey: 'status_id' });
+      Refund.belongsTo(models.Payment, { foreignKey: 'paymentId' });
+      Refund.belongsTo(models.RefundStatus, { foreignKey: 'refundStatusId' });
     }
   }
   Refund.init({
-    refund_id: {
+    refundId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    payment_id: {
+    paymentId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
@@ -26,7 +26,7 @@ export default (sequelize) => {
       type: DataTypes.STRING(3),
       allowNull: false,
     },
-    status_id: {
+    refundStatusId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
@@ -36,12 +36,18 @@ export default (sequelize) => {
     description: {
       type: DataTypes.TEXT,
     },
-    created_at: {
+    createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
-    processed_at: {
+    updatedAt:{
+      allowNull: false,
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+
+    },
+    processedAt: {
       type: DataTypes.DATE,
     },
     metadata: {
@@ -50,8 +56,8 @@ export default (sequelize) => {
   }, {
     sequelize,
     modelName: 'Refund',
-    tableName: 'refunds',
-    underscored: true,
+    tableName: 'refund',
+    underscored: false,
   });
   return Refund;
 };

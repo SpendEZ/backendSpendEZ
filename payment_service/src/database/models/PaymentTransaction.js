@@ -4,22 +4,21 @@ import { Model, DataTypes } from 'sequelize';
 export default (sequelize) => {
   class PaymentTransaction extends Model {
     static associate(models) {
-      PaymentTransaction.belongsTo(models.Payment, { foreignKey: 'payment_id' });
-      PaymentTransaction.belongsTo(models.TransactionType, { foreignKey: 'transaction_type_id' });
-      PaymentTransaction.belongsTo(models.PaymentStatus, { foreignKey: 'status_id' });
+      PaymentTransaction.belongsTo(models.Payment, { foreignKey: 'paymentId' });
+      PaymentTransaction.belongsTo(models.TransactionType, { foreignKey: 'transactionTypeId' });
     }
   }
   PaymentTransaction.init({
-    transaction_id: {
+    transactionId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    payment_id: {
+    paymentId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
-    transaction_type_id: {
+    transactionTypeId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
@@ -31,32 +30,35 @@ export default (sequelize) => {
       type: DataTypes.STRING(3),
       allowNull: false,
     },
-    status_id: {
+    merchantId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
-    gateway_transaction_id: {
-      type: DataTypes.STRING(100),
-    },
-    gateway_response: {
+    description:{
       type: DataTypes.TEXT,
     },
-    created_at: {
+    gatewayTransactionId: {
+      type: DataTypes.STRING(100),
+    },
+    gatewayResponse: {
+      type: DataTypes.TEXT,
+    },
+    createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
-    processed_at: {
+    processedAt: {
       type: DataTypes.DATE,
     },
-    gateway_metadata: {
+    gatewayMetadata: {
       type: DataTypes.JSONB,
     },
   }, {
     sequelize,
     modelName: 'PaymentTransaction',
-    tableName: 'payment_transactions',
-    underscored: true,
+    tableName: 'transaction',
+    underscored: false,
   });
   return PaymentTransaction;
 };

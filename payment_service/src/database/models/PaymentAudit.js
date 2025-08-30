@@ -4,18 +4,18 @@ import { Model, DataTypes } from 'sequelize';
 export default (sequelize) => {
   class PaymentAudit extends Model {
     static associate(models) {
-      PaymentAudit.belongsTo(models.Payment, { foreignKey: 'payment_id' });
-      PaymentAudit.belongsTo(models.AuditStatus, { foreignKey: 'old_status_id', as: 'oldStatus' });
-      PaymentAudit.belongsTo(models.AuditStatus, { foreignKey: 'new_status_id', as: 'newStatus' });
+      PaymentAudit.belongsTo(models.Payment, { foreignKey: 'paymentId' });
+      PaymentAudit.belongsTo(models.AuditStatus, { foreignKey: 'oldStatusId', as: 'oldStatus' });
+      PaymentAudit.belongsTo(models.AuditStatus, { foreignKey: 'newStatusId', as: 'newStatus' });
     }
   }
   PaymentAudit.init({
-    audit_id: {
+    auditId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    payment_id: {
+    paymentId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
@@ -23,20 +23,20 @@ export default (sequelize) => {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-    old_status_id: {
+    oldStatusId: {
       type: DataTypes.UUID,
     },
-    new_status_id: {
+    newStatusId: {
       type: DataTypes.UUID,
     },
-    changed_by: {
+    changedby: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
     changes: {
       type: DataTypes.JSONB,
     },
-    created_at: {
+    createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
@@ -44,8 +44,8 @@ export default (sequelize) => {
   }, {
     sequelize,
     modelName: 'PaymentAudit',
-    tableName: 'payment_audits',
-    underscored: true,
+    tableName: 'audit',
+    underscored: false,
   });
   return PaymentAudit;
 };

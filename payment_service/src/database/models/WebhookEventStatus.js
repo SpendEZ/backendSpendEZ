@@ -4,34 +4,24 @@ import { Model, DataTypes } from 'sequelize';
 export default (sequelize) => {
   class WebhookEventStatus extends Model {
     static associate(models) {
-      WebhookEventStatus.hasMany(models.WebhookEvent, { foreignKey: 'status_id' });
+      WebhookEventStatus.hasMany(models.WebhookEvent, { foreignKey: 'webhookEventStatusId' });
     }
   }
   WebhookEventStatus.init({
-    status_id: {
+    webhookEventStatusId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    status_name: {
+    statusName: {
       type: DataTypes.STRING(50),
       allowNull: false,
       unique: true,
     },
-    created_at: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    updated_at: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
   }, {
     sequelize,
     modelName: 'WebhookEventStatus',
-    tableName: 'webhook_event_statuses',
+    tableName: 'webhookEventStatusId',
     underscored: true,
   });
   return WebhookEventStatus;

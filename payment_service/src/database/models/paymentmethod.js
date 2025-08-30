@@ -4,40 +4,40 @@ import { Model, DataTypes } from 'sequelize';
 export default (sequelize) => {
   class PaymentMethod extends Model {
     static associate(models) {
-      PaymentMethod.belongsTo(models.PaymentType, { foreignKey: 'payment_type_id' });
-      PaymentMethod.hasMany(models.Payment, { foreignKey: 'payment_method_id' });
+      PaymentMethod.belongsTo(models.PaymentType, { foreignKey: 'paymentTypeId' });
+      PaymentMethod.hasMany(models.Payment, { foreignKey: 'paymentMethodId' });
     }
   }
   PaymentMethod.init({
-    payment_method_id: {
+    paymentMethodId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    customer_id: {
+    customerId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
-    payment_type_id: {
+    paymentTypeId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
-    is_default: {
+    isDefault: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
-    is_active: {
+    isActive: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
     },
-    created_at: {
+    createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
-    updated_at: {
+    updatedAt: {
       allowNull: false,
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
@@ -45,8 +45,8 @@ export default (sequelize) => {
   }, {
     sequelize,
     modelName: 'PaymentMethod',
-    tableName: 'payment_methods',
-    underscored: true,
+    tableName: 'paymentMethod',
+    underscored: false,
   });
   return PaymentMethod;
 };

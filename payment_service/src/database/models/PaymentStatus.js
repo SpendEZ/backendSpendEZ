@@ -4,36 +4,25 @@ import { Model, DataTypes } from 'sequelize';
 export default (sequelize) => {
   class PaymentStatus extends Model {
     static associate(models) {
-      PaymentStatus.hasMany(models.Payment, { foreignKey: 'status_id' });
-      PaymentStatus.hasMany(models.PaymentTransaction, { foreignKey: 'status_id' });
+      PaymentStatus.hasMany(models.Payment, { foreignKey: 'paymentStatusId' });
     }
   }
   PaymentStatus.init({
-    status_id: {
+    paymentStatusId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    status_name: {
+    statusName: {
       type: DataTypes.STRING(50),
       allowNull: false,
       unique: true,
     },
-    created_at: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    updated_at: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
   }, {
     sequelize,
     modelName: 'PaymentStatus',
-    tableName: 'payment_statuses',
-    underscored: true,
+    tableName: 'paymentStatus',
+    underscored: false,
   });
   return PaymentStatus;
 };
